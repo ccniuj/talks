@@ -2,15 +2,17 @@
 #### Exploring Functional Programming by Rebuilding Redux
 
 ## Abstract
+
 The goal of this talk is to introduce basic functional programming concepts. This will be achieved by demonstrating how to rebuild [Redux](https://github.com/reactjs/redux), a popular Javascript library, using Ruby. For this purpose, I open-sourced a gem called [Rubidux](https://github.com/davidjuin0519/rubidux), which borrows the model from Redux.
 
 ## Outline
+
 1. #### What is functional programming (FP)?
 
   Functional programming is a paradigm of programming.
 
   Some features are:
-  - Describe "what you want" rather than "how you do it"
+  - Describe **what you want** rather than **how you do it**
   - Functions are first-class
   - Higher order functions => map, reduce, filter, compose, curry
   - Lexical closure
@@ -64,18 +66,22 @@ The goal of this talk is to introduce basic functional programming concepts. Thi
 
 ## Pitch
 ### What can I deliver in this talk?
+
 The goal of this talk is to introduce basic functional programming concepts. This will be achieved by demonstrating how to rebuild [Redux](https://github.com/reactjs/redux), a popular Javascript library, using Ruby. For this purpose, I open-sourced a gem called [Rubidux](https://github.com/davidjuin0519/rubidux), which borrows the model from Redux.
 
 ### Why am I qualified to speak on this topic?
+
 1. Familiar with Redux
 2. Spot Ruby's potentials of functional programming
 3. Built and open-sourced [Rubidux](https://github.com/davidjuin0519/rubidux) to help Ruby community explore functional programming
 
 ### Why should this talk be considered?
+
 1. Explore possibilities of ruby programming
 2. Help ruby community advance Ruby skills
 3. Introduce the next big-hit concepts for people who are interested in big data
 4. Open-sourced gem for further contributions and help ruby community grow
 
 ## Bio
+
 I am currently a Rubyist, interested in functional programming, data engineering, and machine learning. Also a biker and a foodie on the side.
