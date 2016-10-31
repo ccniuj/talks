@@ -1,2 +1,2 @@
-# cfp
-Collection of "call for paper"
+# talks
+Collection of my talks
