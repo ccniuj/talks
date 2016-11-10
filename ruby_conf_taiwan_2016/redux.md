@@ -45,7 +45,8 @@ A Tour inside Redux
 # 1. View Provider
 
 - Capable of calling `dispatch` and accessing `state`
-- Sometimes need a bridge to attach to Redux
+- Mostly **React**
+- Need a bridge to attach to Redux
 
 ---
 # The Bridge: React-Redux
@@ -206,8 +207,6 @@ function dispatch(action) {
 ---
 # Example
 ```javascript
-// reducer.js
-
 const pay = (state = {}, action) =>
   switch(action.type) {
     case 'RAISE_PAY':
@@ -228,8 +227,6 @@ const willBePromoted = (state = '', action) =>
 ---
 # Example
 ```javascript
-// reducer.js
-
 const rootReducer = combineReducers({ pay, willBePromoted })
 
 // This maps to the structure of state tree:
@@ -291,8 +288,9 @@ function combineReducers(reducers) {
 # 7. Middleware
 
 - Higher-order function
-- function that wraps input function
-- Currying 4 arguments
+- Currying 3 arguments
+
+### Example
 
 ```javascript
 const middleware =
@@ -382,7 +380,7 @@ export default function compose(...funcs) {
 # Example
 
 ```javascript
-const new_dispatch = compose([m1, m2, m3])(dispatch)
+const new_dispatch = applyMiddleware([m1, m2, m3])(dispatch)
 // => m1(m2(m3(dispatch)))
 
 new_dispatch(act) // m1's arg_3 is given here
@@ -452,6 +450,4 @@ const m3 =
 - Functional Programming concepts used in **Redux**
 - Implement **Redux** with other language, say Ruby
 
-*Raed more in my [posts](https://github.com/davidjuin0519/til/issues?utf8=%E2%9C%93&q=label%3ARedux%20)
-
----
+*Raed my [posts](https://github.com/davidjuin0519/til/issues?utf8=%E2%9C%93&q=label%3ARedux%20) or attend [Ruby Conf Taiwan 2016](http://rubytaiwan.kktix.cc/events/rubyconftw2016) ;)
