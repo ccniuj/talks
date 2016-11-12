@@ -380,7 +380,7 @@ export default function compose(...funcs) {
 # Example
 
 ```javascript
-const new_dispatch = applyMiddleware([m1, m2, m3])(dispatch)
+const new_dispatch = compose([m1, m2, m3])(dispatch)
 // => m1(m2(m3(dispatch)))
 
 new_dispatch(act) // m1's arg_3 is given here
