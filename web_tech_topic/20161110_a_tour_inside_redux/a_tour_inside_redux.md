@@ -450,4 +450,4 @@ const m3 =
 - Functional Programming concepts used in **Redux**
 - Implement **Redux** with other language, say Ruby
 
-*Raed my [posts](https://github.com/davidjuin0519/til/issues?utf8=%E2%9C%93&q=label%3ARedux%20) or attend [Ruby Conf Taiwan 2016](http://rubytaiwan.kktix.cc/events/rubyconftw2016) ;)
+*Read my [posts](https://github.com/davidjuin0519/til/issues?utf8=%E2%9C%93&q=label%3ARedux%20) or attend [Ruby Conf Taiwan 2016](http://rubytaiwan.kktix.cc/events/rubyconftw2016) ;)
