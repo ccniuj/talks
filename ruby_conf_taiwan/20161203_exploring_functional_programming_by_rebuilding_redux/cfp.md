@@ -5,6 +5,31 @@
 
 The goal of this talk is to introduce basic functional programming concepts. This will be achieved by demonstrating how to rebuild [Redux](https://github.com/reactjs/redux), a popular Javascript library, using Ruby. For this purpose, I open-sourced a gem called [Rubidux](https://github.com/davidjuin0519/rubidux), which borrows the model from Redux.
 
+## 簡介
+
+Ruby不僅簡潔、優雅、易用，它還具有一些特性，可以讓我們使用一種古老的程式典範：Functional Programming。講者將透過實作一個著名的 Javascript Library: Redux，來示範如何使用 Ruby 實踐 Functional Programming。
+
+- Functiona are first-class
+can be stored in variables and data structures
+can be passed as a parameter to a subroutine
+can be returned as the result of a subroutine
+=> Higher-order function
+=> map, filter, reduce, compose
+- recursion rather than iterative
+- immutability
+
+
+Why Redux?
+- 原始碼短小
+- 大量使用
+- 良好的文件
+
+What is Redux
+
+Rubidux
+
+
+
 ## Outline
 
 1. #### What is functional programming (FP)?
