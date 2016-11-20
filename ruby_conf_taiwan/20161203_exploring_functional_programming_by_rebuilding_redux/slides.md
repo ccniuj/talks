@@ -1,13 +1,20 @@
-Exploring Functional Programming by Rebuilding Redux
-===
+## Title 
+#### Exploring Functional Programming by Rebuilding Redux
 
-# ![](images/marp.png)
+## Abstract
 
-###### Created by Juin Chiu ( [@davidjuin0519](https://github.com/davidjuin0519) )
+The goal of this talk is to introduce basic functional programming concepts. This will be achieved by demonstrating how to rebuild [Redux](https://github.com/reactjs/redux), a popular Javascript library, using Ruby. For this purpose, I open-sourced a gem called [Rubidux](https://github.com/davidjuin0519/rubidux), which borrows the model from Redux.
 
----
+## 簡介
 
-# Outline
+Ruby不僅簡潔、優雅、易用，它還具有一些特性，可以讓我們使用一種古老的程式典範：Functional Programming。講者將透過實作一個著名的 Javascript Library: Redux，來示範如何使用 Ruby 實踐 Functional Programming。
+
+Why Redux?
+- 原始碼短小
+- 大量使用
+- 良好的文件
+
+## Outline
 
 1. #### What is functional programming (FP)?
 
@@ -24,12 +31,19 @@ Exploring Functional Programming by Rebuilding Redux
   - No side-effects
   - Immutable data
 
----
+  - Functiona are first-class
+can be stored in variables and data structures
+can be passed as a parameter to a subroutine
+can be returned as the result of a subroutine
+=> Higher-order function
+=> map, filter, reduce, compose
 
-# Outline
+  - recursion rather than iterative
+  - immutability
 
 2. #### Why is FP getting popular again?
 
+  - Higher level programming language
   - Greater computing power compared to 50 years ago
   - Need for high concurrency application (immutability)
   - Big data (data pipeline infrastructures like Hadoop / Spark)
@@ -42,10 +56,6 @@ Exploring Functional Programming by Rebuilding Redux
 
   So, yes, Ruby can do FP, technically.
 
----
-
-# Outline
-
 3. #### Introduction to Redux
 
   Redux is a great choice to get going.
@@ -54,10 +64,6 @@ Exploring Functional Programming by Rebuilding Redux
   - Tiny
   - Well documented
   - Increasingly used in Javascript apps
-
----
-
-# Outline
 
 4. #### Demonstrating Rubidux
 
@@ -68,20 +74,19 @@ Exploring Functional Programming by Rebuilding Redux
   - Map / Reduce
   - Lazy evaluation
 
----
-
-# Outline
-
 5. #### Possible use case of Rubidux
 
   Providing state management for [Reactrb](https://github.com/reactrb/reactrb) (Ruby wrapper for React.js)
-
----
-
-# Outline
 
 6. #### Takeaway messages 
 
   - Have a sense of using Ruby lambda
   - Know how to complement OO design with FP style
   - Contribute to Rubidux if you like it
+
+### Why should this talk be considered?
+
+1. Explore possibilities of ruby programming
+2. Help ruby community advance Ruby skills
+3. Introduce the next big-hit concepts for people who are interested in big data
+4. Open-sourced gem for further contributions and help ruby community grow
