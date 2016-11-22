@@ -84,6 +84,41 @@ can be returned as the result of a subroutine
   - Know how to complement OO design with FP style
   - Contribute to Rubidux if you like it
 
+The task is to build a data structure and provide some interface to update its data.
+Can be done by function composition
+
+Composability
+How can we build a architecture by composing functions?
+Explain why
+
+1. Recursive Data Type
+
+Reducers
+A data type for values that may contain other values of the same type.
+ex. list
+
+The interface to update the data
+Function is the data
+Pure function
+Analogy to BinaryTree
+Use higher-order function to encapsulate
+
+2. Make abstract data type
+Store
+A data type
+Collect tools to manipulate the data structure
+Dispatch
+Subscribe
+Replace reducer
+
+
+3. Control the complexity
+Middleware
+Side effects
+Remove the boilerplate code
+composition
+testability
+
 ### Why should this talk be considered?
 
 1. Explore possibilities of ruby programming
