@@ -25,17 +25,72 @@ Functional Programming Used in Redux
 ---
 # Outline
 
-1. Recursive Data Type
-2. Function as an Abstraction
-3. Controllable Complexity
+1. Lambda Higher Order Function
+2. Build the Data Structure => Recursive Data Type
+3. Control the Complexity => Function Composition
+
+p.s.
+1. This talk might be a little bit hard if you havn't used Redux.
+2. Examples are written in Ruby jsut to explain the concept.
 
 ---
-# 1. Recursive Data Type
+# Redux
+# ![](redux.png)
+
+---
+# 1. Lambda
+
+- Named after **Lambda Calculus**
+- Anonymous function
+- First-class citizen
+  - Can be stored in variables and data structures
+  - Can be passed as a parameter to a subroutine
+  - Can be returned as the result of a subroutine
+- Foundation of Higher-order functions
+- **Reducer** is a lambda that takes `state` and `action` and returns new `state`
+# ![](reducer.png)
+---
+# Exercise
+
+```ruby
+# Define a lambda and bind it to variable "add_one"
+add_one = -> n { n + 1 }
+
+# Pass "add_one" to higher-order function "map"
+[1, 2, 3].map(&add_one) # => [2, 3, 4]
+
+# Define a lambda that returns another lambda
+time = -> t { -> n { n*t } }
+
+# Pass "time" to higher-order function "map"
+[1, 2, 3].map(&time.(3)) # => [3, 6, 9]
+```
+
+---
+# Example
+
+```ruby
+reducer = -> (state, action) {
+  state ||= { a: 0, b: 0 }
+  case action[:type]
+  when "a_plus_one"
+    { a: state[:a] + 1, b: state[:b] }
+  when "b_plus_one"
+    { a: state[:a], b: state[:b] + 1 }
+  else
+    state
+  end
+}
+```
+
+---
+# 2. Recursive Data Type
 
 - A type for values that may contains other values of the same type.
-- Examples: List, Tree
-- Reducer is a recursive data type similar to tree
-- Function is data
+- Example: **Tree**
+- Need to build a more complicated data structure of Reducer
+- **Reducer** can be thought of as a recursive data type like **Tree**
+# ![](tree.png)
 
 ---
 ```ruby
@@ -65,15 +120,16 @@ module BinaryTree
 end
 ```
 ---
-# Example
+# Exercise
 
 ```ruby
 b = BinaryTree::EmptyNode.new.
                   includes(3).
                   includes(1).
-                  includes(4).
+                  includes(5).
                   includes(2).
-                  includes(5)
+                  includes(4).
+                  includes(6)
 # => #<BinaryTree::Node:0x007fc8ca848330...>
 
 b.left
@@ -84,7 +140,7 @@ b.right
 ```
 
 ---
-# Reducer
+# Example
 
 ```ruby
 module Reducer
@@ -135,12 +191,33 @@ r.apply(s, a)
 ```
 
 ---
+# Simplified Version
 
-# 2. Function as an Abstraction
+1. Assume no other operations like `includes`
+2. Use `Hash` to represent the tree structure
+3. No distinction between `Node` and `EmptyNode`
 
-Reducer has only one method `apply`
-Instead of creating a class, we can just use function as an abstraction
+```ruby
+def merge(left, right, element)
+  {
+    left: left,
+    right: right,
+    element: element
+  }
+end
 
+t1 = { left: nil, right: nil, element: 1 }
+t2 = { left: nil, right: nil, element: 3 }
+
+t = merge(t1, t2, 3)
+# { :left    => { :left=>nil, :right=>nil, :element=>1 },
+#   :right   => { :left=>nil, :right=>nil, :element=>2 },
+#   :element => 3 }
+```
+---
+# Simplified Version
+
+Equivalent implementation of `combineReducer`:
 ```ruby
 def combine
   -> **reducers {
@@ -156,7 +233,146 @@ end
 ```
 
 ---
-# 3. Controllable Complexity
+# 3. Function Composition
 
-middleware
-function composition
+- Apply One function to the result of another function to produce a third function
+- Control complexity by breaking larger function into smaller functions
+- **Middleware** is built on function composition
+
+---
+# Exercise
+```ruby
+add_one  = -> n { n + 1 }
+time_two = -> n { n * 2 }
+
+[1, 2, 3].map { |n| time_two.(add_one.(n)) }
+# => [4, 6, 8]
+```
+Any more concise way to do this?
+
+---
+# Exercise
+```ruby
+add_one  = -> n { n + 1 }
+time_two = -> n { n * 2 }
+
+compose = -> f { -> g { -> n { g.(f.(n)) } } }
+
+func = compose.(add_one).(time_two)
+
+[1, 2, 3].map(&func)
+# => [4, 6, 8]
+```
+Looks good.
+But what if we have more than two functions to compose?
+
+---
+# Exercise
+```ruby
+add_one  = -> f { -> n { f.(n+1) } }
+time_two = -> f { -> n { f.(n*2) } }
+
+compose  = -> funcs {
+  init = -> n { n }
+  funcs.reverse.reduce(init) { |acc, curr| curr.(acc) }
+}
+
+func = compose.([add_one, time_two])
+
+[1, 2, 3].map(&func) # => [4, 6, 8]
+```
+We can add arbitrary numbers of function to compose as long as these functions has the same structure
+
+---
+# Example
+```ruby
+def create
+  -> fn {
+    -> **middleware_api {
+      -> _next {
+        -> action {
+          fn.(_next, action, **middleware_api)
+        }
+      }
+    }
+  }
+end
+```
+
+---
+# Example
+```ruby
+def compose
+  -> *funcs {
+    if funcs.size == 1
+      funcs[0]
+    else
+      -> init {
+        funcs.
+          reverse.
+          reduce(init) { |composed, f| f.(composed) } 
+      }
+    end
+  }
+end
+```
+
+---
+# Example
+```ruby
+def apply
+  -> *middlewares {
+    -> (get_state, dispatch) {
+      middleware_api = {
+        get_state: get_state,
+        dispatch: -> action { new_dispatch.(action) }
+      }
+      chain = middlewares.map { |middleware|
+                middleware.(middleware_api) }
+      new_dispatch = compose.(*chain).(dispatch)
+    }
+  }
+end
+```
+
+---
+# Example
+```ruby
+m1 = create.(
+  -> (_next, action, **middleware_api) {
+    puts "In middleware 1"
+    _next.(action)
+    puts "Out middleware 1"
+  }
+)
+
+m2 = create.(
+  -> (_next, action, **middleware_api) {
+    puts "In middleware 2"
+    _next.(action)
+    puts "Out middleware 2"
+  }
+)
+
+apply.(m1, m2).(STATE, DISPATCH).(ACTION)
+# => "In middleware 1"
+# => "In middleware 2"
+# => "Out middleware 2"
+# => "Out middleware 1"
+```
+
+---
+# Summary
+
+### What I have covered
+Some conceps in Functional Programming such as:
+- Lambda
+- Recursive Data Type
+- Composition
+
+### What I havn't covered
+- Immutable
+- Lazy Evaluation
+- Monad
+
+*Read my [posts](https://github.com/davidjuin0519/til/issues?utf8=%E2%9C%93&q=label%3ARedux%20) or attend [Ruby Conf Taiwan 2016](http://rubytaiwan.kktix.cc/events/rubyconftw2016) ;)
