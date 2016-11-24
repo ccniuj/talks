@@ -8,12 +8,15 @@ Functional Programming Used in Redux
 ---
 # About Me
 #### Juin Chiu [@davidjuin0519](https://github.com/davidjuin0519)
+
 **Language**:
+
 - Ruby
 - Javascript
 - Scala
 
-**Interested In**:
+**Interested in**:
+
 - Functional Programming
 - Data Engineering
 - Machine Learning
@@ -30,8 +33,9 @@ Functional Programming Used in Redux
 3. Function Composition
 
 p.s.
-- This talk might be a little bit hard if you havn't used Redux
-- Examples are written in Ruby
+
+- This talk might be a little bit hard if you havn't used Redux.
+- Examples are written in **Ruby**.
 
 ---
 # Redux
@@ -46,8 +50,9 @@ p.s.
   - Can be stored in variables and data structures
   - Can be passed as a parameter to a subroutine
   - Can be returned as the result of a subroutine
-- Foundation of Higher-order functions
-- **Reducer** is a lambda that takes `state` and `action` and returns new `state`
+- Foundation of higher-order functions
+- **Reducer** is a lambda that takes `state` and `action` and then returns new `state`
+
 # ![](reducer.png)
 
 ---
@@ -87,10 +92,11 @@ reducer = -> (state, action) {
 ---
 # 2. Recursive Data Type
 
-- A type for values that may contains other values of the same type.
+- A type for values that may contain other values of the same type
 - Example: **Tree**
 - Need to build a more complicated data structure of Reducer
 - **Reducer** can be thought of as a recursive data type like **Tree**
+
 # ![](tree.png)
 
 ---
@@ -221,6 +227,7 @@ t = merge(t1, t2, 3)
 # Simplified Version
 
 Equivalent implementation of `combineReducer`:
+
 ```ruby
 def combine
   -> **reducers {
@@ -238,7 +245,8 @@ end
 ---
 # 3. Function Composition
 
-- Apply One function to the result of another function to produce a third function
+- Apply one function to the result of another function to produce a third function
+- `f。g === f(g(x))`
 - Control complexity by breaking larger function into smaller functions
 - **Middleware** is built on function composition
 
@@ -251,7 +259,7 @@ time_two = -> n { n * 2 }
 [1, 2, 3].map { |n| time_two.(add_one.(n)) }
 # => [4, 6, 8]
 ```
-Any more concise way to do this?
+Question: Any more concise way to do this?
 
 ---
 # Exercise
@@ -266,8 +274,7 @@ func = compose.(add_one).(time_two)
 [1, 2, 3].map(&func)
 # => [4, 6, 8]
 ```
-Looks good.
-But what if we have more than two functions to compose?
+Looks good, but what if we have more than two functions to compose?
 
 ---
 # Exercise
@@ -284,7 +291,7 @@ func = compose.([add_one, time_two])
 
 [1, 2, 3].map(&func) # => [4, 6, 8]
 ```
-We can add arbitrary numbers of function to compose as long as these functions has the same structure
+We can compose arbitrary numbers of functions as long as they have the same structure.
 
 ---
 # Example
@@ -369,11 +376,13 @@ apply.(m1, m2).(STATE, DISPATCH).(ACTION)
 
 ### What I have covered
 Some concepts in Functional Programming such as:
+
 - Lambda
 - Recursive Data Type
 - Composition
 
 ### What I havn't covered
+
 - Immutable
 - Lazy Evaluation
 - Monad
