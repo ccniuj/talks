@@ -25,13 +25,13 @@ Functional Programming Used in Redux
 ---
 # Outline
 
-1. Lambda Higher Order Function
-2. Build the Data Structure => Recursive Data Type
-3. Control the Complexity => Function Composition
+1. Lambda
+2. Recursive Data Type
+3. Function Composition
 
 p.s.
-1. This talk might be a little bit hard if you havn't used Redux.
-2. Examples are written in Ruby jsut to explain the concept.
+- This talk might be a little bit hard if you havn't used Redux
+- Examples are written in Ruby
 
 ---
 # Redux
@@ -49,6 +49,7 @@ p.s.
 - Foundation of Higher-order functions
 - **Reducer** is a lambda that takes `state` and `action` and returns new `state`
 # ![](reducer.png)
+
 ---
 # Exercise
 
@@ -119,6 +120,7 @@ module BinaryTree
   end
 end
 ```
+
 ---
 # Exercise
 
@@ -214,6 +216,7 @@ t = merge(t1, t2, 3)
 #   :right   => { :left=>nil, :right=>nil, :element=>2 },
 #   :element => 3 }
 ```
+
 ---
 # Simplified Version
 
@@ -365,7 +368,7 @@ apply.(m1, m2).(STATE, DISPATCH).(ACTION)
 # Summary
 
 ### What I have covered
-Some conceps in Functional Programming such as:
+Some concepts in Functional Programming such as:
 - Lambda
 - Recursive Data Type
 - Composition
