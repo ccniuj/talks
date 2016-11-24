@@ -215,7 +215,7 @@ def merge(left, right, element)
 end
 
 t1 = { left: nil, right: nil, element: 1 }
-t2 = { left: nil, right: nil, element: 3 }
+t2 = { left: nil, right: nil, element: 2 }
 
 t = merge(t1, t2, 3)
 # { :left    => { :left=>nil, :right=>nil, :element=>1 },
@@ -320,7 +320,7 @@ def compose
       -> init {
         funcs.
           reverse.
-          reduce(init) { |composed, f| f.(composed) } 
+          reduce(init) { |composed, f| f.(composed) }
       }
     end
   }
