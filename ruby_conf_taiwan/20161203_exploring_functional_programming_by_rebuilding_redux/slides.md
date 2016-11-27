@@ -1,127 +1,414 @@
-## Title 
-#### Exploring Functional Programming by Rebuilding Redux
+<div style="text-align:center">
+  <img src="ruby_logo.png" style="margin-right:40px">
+  <img src="plus.png" style="position: relative; top:-50px">
+  <img src="lambda_logo.png" style="position: relative; top:15px;">
+  <h2> Exploring Functional Programming</h2>
+  <h5>by rebuilding Redux</h5>
+</div>
+<br/>
+<div style="text-align:right">
+  <h6>Juin Chiu <a href="https://github.com/davidjuin0519">@davidjuin0519</a></h6>
+  <h6>Backend Engineer, iCook, Polydice. Inc</h6>
+</div>
 
-## Abstract
+---
+## The Goal
+**Introduce basic functional programming concepts**
+<br/>
 
-The goal of this talk is to introduce basic functional programming concepts. This will be achieved by demonstrating how to rebuild [Redux](https://github.com/reactjs/redux), a popular Javascript library, using Ruby. For this purpose, I open-sourced a gem called [Rubidux](https://github.com/davidjuin0519/rubidux), which borrows the model from Redux.
+## Why Functional Programming?
 
-## 簡介
+- Useful
+- Elegant
+- Abstract
+- Mathematical
 
-Ruby不僅簡潔、優雅、易用，它還具有一些特性，可以讓我們使用一種古老的程式典範：Functional Programming。講者將透過實作一個著名的 Javascript Library: Redux，來示範如何使用 Ruby 實踐 Functional Programming。
+---
+## What is Funcitonal Programming?
+**Functions are first-class citizen**
 
-Why Redux?
-- 原始碼短小
-- 大量使用
-- 良好的文件
+In a nut shell:
 
-## Outline
+| Object-Oriented | Functional |
+| -- | -- |
+| Iteration | Recursion |
+| Mutable | Immutable |
+| Design Pattern | Composition |
 
-1. #### What is functional programming (FP)?
+---
+# What is Redux?
+**Observable object tree**
+with
+&nbsp;&nbsp;&nbsp;&nbsp;**single insterface for updating its state**
+&nbsp;&nbsp;&nbsp;&nbsp;and
+&nbsp;&nbsp;&nbsp;&nbsp;**flexible event handling mechanism**
 
-  Functional programming is a paradigm of programming.
+![](redux.png)
 
-  Some features are:
-  - Describe **what you want** rather than **how you do it**
-  - Functions are first-class
-  - Higher order functions => map, reduce, filter, compose, curry
-  - Lexical closure
-  - Referential transparency => pure function
-  - Pattern matching
-  - Lazy evaluation
-  - No side-effects
-  - Immutable data
+---
+## Build an architecture like Redux in 3 steps
 
-  - Functiona are first-class
-can be stored in variables and data structures
-can be passed as a parameter to a subroutine
-can be returned as the result of a subroutine
-=> Higher-order function
-=> map, filter, reduce, compose
+<span style="color: red">Step 1</span>: **Object with single insterface for updating its state**
+<div style="text-align:center;">
+  <img src="step_1.png" style="height: 80px;">
+</div>
 
-  - recursion rather than iterative
-  - immutability
+<span style="color: red">Step 2</span>: **Observable object tree**
+<div style="text-align:center">
+  <img src="step_2.png" style="height: 180px;">
+</div>
 
-2. #### Why is FP getting popular again?
+<span style="color: red">Step 3</span>: **flexible event handling mechanism**
+<div style="text-align:center">
+  <img src="step_3.png" style="height: 220px;">
+</div>
 
-  - Higher level programming language
-  - Greater computing power compared to 50 years ago
-  - Need for high concurrency application (immutability)
-  - Big data (data pipeline infrastructures like Hadoop / Spark)
-  
-  ##### Can Ruby do functional programming?
+---
+# Actually, I have built it ;)
+# [Rubidux](https://github.com/davidjuin0519/rubidux)
 
-  - Ruby is an elegant language
-  - Ruby is inspired by LISP
-  - Ruby has lambda
+---
+# 1. Lambda
 
-  So, yes, Ruby can do FP, technically.
+- Named after **Lambda Calculus**
+- Anonymous function
+- First-class citizen
+  - Can be stored in variables and data structures
+  - Can be passed as a parameter to a subroutine
+  - Can be returned as the result of a subroutine
+- Foundation of higher-order functions
+- **Reducer** is a lambda that takes `state` and `action` and then returns new `state`
 
-3. #### Introduction to Redux
+---
+# Exercise
 
-  Redux is a great choice to get going.
+```ruby
+# Define a lambda and bind it to variable "add_one"
+add_one = -> n { n + 1 }
 
-  - Use a lot of FP concepts
-  - Tiny
-  - Well documented
-  - Increasingly used in Javascript apps
+# Pass "add_one" to higher-order function "map"
+[1, 2, 3].map(&add_one) # => [2, 3, 4]
 
-4. #### Demonstrating Rubidux
+# Define a lambda that returns another lambda
+time = -> t { -> n { n*t } }
 
-  Including FP concepts and skills such as:
-  - Lambda
-  - Compose
-  - Curry
-  - Map / Reduce
-  - Lazy evaluation
+# Pass "time" to higher-order function "map"
+[1, 2, 3].map(&time.(3)) # => [3, 6, 9]
+```
 
-5. #### Possible use case of Rubidux
+---
+# Example
 
-  Providing state management for [Reactrb](https://github.com/reactrb/reactrb) (Ruby wrapper for React.js)
+```ruby
+reducer = -> (state, action) {
+  state ||= { a: 0, b: 0 }
+  case action[:type]
+  when "a_plus_one"
+    { a: state[:a] + 1, b: state[:b] }
+  when "b_plus_one"
+    { a: state[:a], b: state[:b] + 1 }
+  else
+    state
+  end
+}
+```
 
-6. #### Takeaway messages 
+---
+# 2. Recursive Data Type
 
-  - Have a sense of using Ruby lambda
-  - Know how to complement OO design with FP style
-  - Contribute to Rubidux if you like it
+- A type for values that may contain other values of the same type
+- Example: **Tree**
+- Need to build a more complicated data structure of Reducer
+- **Reducer** can be thought of as a recursive data type like **Tree**
 
-The task is to build a data structure and provide some interface to update its data.
-Can be done by function composition
+# ![](tree.png)
 
-Composability
-How can we build a architecture by composing functions?
-Explain why
+---
+```ruby
+module BinaryTree
+  class Node
+    attr_accessor :left, :right, :element
+    def initialize(left, right, e)
+      @left = left
+      @right = right
+      @element = e
+    end
+    def includes(e)
+      if e > @element
+        Node.new(@left, @right.includes(e), @element)
+      elsif e < @element
+        Node.new(@left.includes(e), @right, @element)
+      else
+        self
+      end
+    end
+  end
+  class EmptyNode
+    def includes(e)
+      Node.new(EmptyNode.new, EmptyNode.new, e)
+    end
+  end
+end
+```
 
-1. Recursive Data Type
+---
+# Exercise
 
-Reducers
-A data type for values that may contain other values of the same type.
-ex. list
+```ruby
+b = BinaryTree::EmptyNode.new.
+                  includes(3).
+                  includes(1).
+                  includes(5).
+                  includes(2).
+                  includes(4).
+                  includes(6)
+# => #<BinaryTree::Node:0x007fc8ca848330...>
 
-The interface to update the data
-Function is the data
-Pure function
-Analogy to BinaryTree
-Use higher-order function to encapsulate
+b.left
+# => #<BinaryTree::Node:0x007fc8ca8487b8...>
 
-2. Make abstract data type
-Store
-A data type
-Collect tools to manipulate the data structure
-Dispatch
-Subscribe
-Replace reducer
+b.right
+# => #<BinaryTree::Node:0x007fc8ca8483d0...>
+```
 
+---
+# Example
 
-3. Control the complexity
-Middleware
-Side effects
-Remove the boilerplate code
-composition
-testability
+```ruby
+module Reducer
+  class Combined
+    attr_accessor :func_map
+    def initialize(**func_map)
+      @func_map = func_map
+    end
+    def apply(state, action)
+      func_map.map { |k, v| [k, v.apply(state[k], action)] }.to_h
+    end
+  end
+  class Native
+    attr_accessor :func
+    def initialize(func)
+      @func = func
+    end
+    def apply(state, action)
+      func.(state, action)
+    end
+  end
+end
+```
 
-### Why should this talk be considered?
+---
+# Example
 
-1. Explore possibilities of ruby programming
-2. Help ruby community advance Ruby skills
-3. Introduce the next big-hit concepts for people who are interested in big data
-4. Open-sourced gem for further contributions and help ruby community grow
+```ruby
+ab = -> (state, action) {
+  case action[:type]
+  when "a_plus_one"
+    { a: state[:a]+1, b: state[:b] }
+  when "b_plus_one"
+    { a: state[:a], b: state[:b]+1 }
+  else
+    state
+  end
+}
+
+r = Reducer::Combined.new(
+  foo: Reducer::Combined.new(ab: Reducer::Native.new(ab))
+)
+s = { foo: { ab: { a: 0, b: 0 } } }
+a = { type: 'a_plus_one' }
+
+r.apply(s, a)
+# => {:foo=>{:ab=>{:a=>1, :b=>0}}}
+```
+
+---
+# Simplified Version
+
+1. Assume no other operations like `includes`
+2. Use `Hash` to represent the tree structure
+3. No distinction between `Node` and `EmptyNode`
+
+```ruby
+def merge(left, right, element)
+  {
+    left: left,
+    right: right,
+    element: element
+  }
+end
+
+t1 = { left: nil, right: nil, element: 1 }
+t2 = { left: nil, right: nil, element: 2 }
+
+t = merge(t1, t2, 3)
+# { :left    => { :left=>nil, :right=>nil, :element=>1 },
+#   :right   => { :left=>nil, :right=>nil, :element=>2 },
+#   :element => 3 }
+```
+
+---
+# Simplified Version
+
+Equivalent implementation of `combineReducer`:
+
+```ruby
+def combine
+  -> **reducers {
+    -> (state, action) {
+      state ||= {}
+      reducers.
+        map { |key, reducer|
+          [key, reducer.(state[key], action)] }.
+        to_h
+    }
+  }
+end
+```
+
+---
+# 3. Function Composition
+
+- Apply one function to the result of another function to produce a third function
+- Control complexity by breaking larger function into smaller functions
+- **Middleware** is built on function composition
+
+---
+# Exercise
+```ruby
+add_one  = -> n { n + 1 }
+time_two = -> n { n * 2 }
+
+[1, 2, 3].map { |n| time_two.(add_one.(n)) }
+# => [4, 6, 8]
+```
+Question: Any more concise way to do this?
+
+---
+# Exercise
+```ruby
+add_one  = -> n { n + 1 }
+time_two = -> n { n * 2 }
+
+compose = -> f { -> g { -> n { g.(f.(n)) } } }
+
+func = compose.(add_one).(time_two)
+
+[1, 2, 3].map(&func)
+# => [4, 6, 8]
+```
+Looks good, but what if we have more than two functions to compose?
+
+---
+# Exercise
+```ruby
+add_one  = -> f { -> n { f.(n+1) } }
+time_two = -> f { -> n { f.(n*2) } }
+
+compose  = -> funcs {
+  init = -> n { n }
+  funcs.reverse.reduce(init) { |acc, curr| curr.(acc) }
+}
+
+func = compose.([add_one, time_two])
+
+[1, 2, 3].map(&func) # => [4, 6, 8]
+```
+We can compose arbitrary numbers of functions as long as they have the same structure.
+
+---
+# Example
+```ruby
+def create
+  -> fn {
+    -> **middleware_api {
+      -> _next {
+        -> action {
+          fn.(_next, action, **middleware_api)
+        }
+      }
+    }
+  }
+end
+```
+
+---
+# Example
+```ruby
+def compose
+  -> *funcs {
+    if funcs.size == 1
+      funcs[0]
+    else
+      -> init {
+        funcs.
+          reverse.
+          reduce(init) { |composed, f| f.(composed) }
+      }
+    end
+  }
+end
+```
+
+---
+# Example
+```ruby
+def apply
+  -> *middlewares {
+    -> (get_state, dispatch) {
+      middleware_api = {
+        get_state: get_state,
+        dispatch: -> action { new_dispatch.(action) }
+      }
+      chain = middlewares.map { |middleware|
+                middleware.(middleware_api) }
+      new_dispatch = compose.(*chain).(dispatch)
+    }
+  }
+end
+```
+
+---
+# Example
+```ruby
+m1 = create.(
+  -> (_next, action, **middleware_api) {
+    puts "In middleware 1"
+    _next.(action)
+    puts "Out middleware 1"
+  }
+)
+
+m2 = create.(
+  -> (_next, action, **middleware_api) {
+    puts "In middleware 2"
+    _next.(action)
+    puts "Out middleware 2"
+  }
+)
+
+apply.(m1, m2).(STATE, DISPATCH).(ACTION)
+# => "In middleware 1"
+# => "In middleware 2"
+# => "Out middleware 2"
+# => "Out middleware 1"
+```
+
+---
+# Summary
+
+### What I have covered
+Some concepts in Functional Programming such as:
+
+- Lambda
+- Recursive Data Type
+- Composition
+
+### What I havn't covered
+
+- Immutable
+- Lazy Evaluation
+- Monad
+
+---
+# Thanks for your listening ;)
