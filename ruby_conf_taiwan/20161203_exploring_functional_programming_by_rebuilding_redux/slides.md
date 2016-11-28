@@ -3,7 +3,6 @@
   <img src="plus.png" style="position: relative; top:-50px" />
   <img src="lambda_logo.png" style="position: relative; top:15px;" />
   <h3>Exploring Functional Programming by Rebuilding Redux</h3>
-  
 </div>
 <br/>
 <div style="text-align:right">
@@ -27,18 +26,17 @@
 ## What is Functional Programming?
 **Functions are first-class citizen**
 
-OO vs. FP:
-Iteration&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vs.&nbsp;&nbsp;&nbsp;&nbsp; Recursion
-Mutable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vs.&nbsp;&nbsp;&nbsp;&nbsp; Immutable
-Design Pattern&nbsp;&nbsp;&nbsp;&nbsp; vs.&nbsp;&nbsp;&nbsp;&nbsp; Composition
+Object-Oriented Programming vs. Functional Programming:
+
+| OOP | FP |
+| --- | --- |
+| Iteration | Recursion |
+| Mutable | Immutable |
+| Design Pattern | Composition |
 
 ---
 # What is Redux?
-**Observable object tree**
-with
-&nbsp;&nbsp;&nbsp;&nbsp;**single interface for  state updating**
-&nbsp;&nbsp;&nbsp;&nbsp;and
-&nbsp;&nbsp;&nbsp;&nbsp;**flexible event handling mechanism**
+**Observable object tree** with **single interface for  state updating** and **flexible event handling mechanism**
 
 ![](redux.png)
 
