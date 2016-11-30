@@ -11,34 +11,27 @@
 </div>
 
 ---
-## The Goal
-**Introduce basic functional programming concepts**
-<br/>
+## What is Functional Programming?
+Compared to **imperative programming**:
+- It is **declarative**: it describes **what you want** rather than **how you do it**
+- Functions are first-class citizen
+- Functions do recursion to repeat computation
+- Functions are pure
 
+---
 ## Why Functional Programming?
 
-- Useful
-- Elegant
-- Abstract
-- Mathematical
+- Immutability is amazingly good for high concurrency application
+- Pure functions are easy to test
+- Complexity of program design can be controlled by the use of function composition
 
 ---
-## What is Functional Programming?
-**Functions are first-class citizen**
-
-Object-Oriented Programming vs. Functional Programming:
-
-| OOP | FP |
-| --- | --- |
-| Iteration | Recursion |
-| Mutable | Immutable |
-| Design Pattern | Composition |
-
----
-# What is Redux?
+## What is Redux? Why Redux?
 **Observable object tree** with **single interface for  state updating** and **flexible event handling mechanism**
-
-![](redux.png)
+<br />
+<div style="text-align:center;">
+  <img src="step_3.png" style="width: 700px;" />
+</div>
 
 ---
 ## Implement a Redux Architecture in 3 steps
@@ -59,8 +52,10 @@ Object-Oriented Programming vs. Functional Programming:
 </div>
 
 ---
-# Actually, I have built it ;)
-# [Rubidux](https://github.com/davidjuin0519/rubidux)
+# See [Rubidux](https://github.com/davidjuin0519/rubidux) for more details
+<div style="text-align:center">
+  <img src="rubidux.png" style="border: 1px solid;" />
+</div>
 
 ---
 <div style="text-align:center;">
@@ -81,22 +76,22 @@ Object-Oriented Programming vs. Functional Programming:
   - Can be passed as a parameter to a subroutine
   - Can be returned as the result of a subroutine
 - Foundation of higher-order functions
-- **Reducer** is a lambda that takes `state` and `action` and then returns new `state`
 
 ---
 # Example
 
 ```ruby
-# Define a lambda and bind it to variable "add_one"
 add_one = -> n { n + 1 }
 
-# Pass "add_one" to higher-order function "map"
+add_one.(1) # => 2
+
 [1, 2, 3].map(&add_one) # => [2, 3, 4]
 
-# Define a lambda that returns another lambda
+
 time = -> t { -> n { n*t } }
 
-# Pass "time" to higher-order function "map"
+time.(3) # => #<Proc:...>
+
 [1, 2, 3].map(&time.(3)) # => [3, 6, 9]
 ```
 
@@ -139,8 +134,7 @@ reducer.(s, a)
 
 - A type for values that may contain other values of the same type
 - Example: **Tree**
-- Need to build a more complicated data structure of Reducer
-- **Reducer** can be thought of as a recursive data type like **Tree**
+
 <br />
 <div style="text-align:center">
   <img src="tree.png" style="width: 350px;" />
@@ -166,32 +160,13 @@ module BinaryTree
       end
     end
   end
+
   class EmptyNode
     def includes(e)
       Node.new(EmptyNode.new, EmptyNode.new, e)
     end
   end
 end
-```
-
----
-# Example
-
-```ruby
-b = BinaryTree::EmptyNode.new.
-                  includes(3).
-                  includes(1).
-                  includes(5).
-                  includes(2).
-                  includes(4).
-                  includes(6)
-# => #<BinaryTree::Node:0x007fc8ca848330...>
-
-b.left
-# => #<BinaryTree::Node:0x007fc8ca8487b8...>
-
-b.right
-# => #<BinaryTree::Node:0x007fc8ca8483d0...>
 ```
 
 ---
@@ -209,6 +184,7 @@ module Reducer
               .to_h
     end
   end
+
   class Native
     attr_accessor :func
     def initialize(func)
@@ -222,50 +198,26 @@ end
 ```
 
 ---
-```ruby
-# Usage
-
-ab = -> (state, action) {
-  case action[:type]
-  when "a_plus_one"
-    { a: state[:a]+1, b: state[:b] }
-  when "b_plus_one"
-    { a: state[:a], b: state[:b]+1 }
-  else
-    state
-  end
-}
-
-reducer = Reducer::Combined.new(
-  foo: Reducer::Combined.new(ab: Reducer::Native.new(ab))
-)
-s = { foo: { ab: { a: 0, b: 0 } } }
-a = { type: 'a_plus_one' }
-
-reducer.apply(s, a)
-# => {:foo=>{:ab=>{:a=>1, :b=>0}}}
-```
-
----
 # Simplified Version of Tree
 
-1. Assume no other operations like `includes`
-2. Use `Hash` to represent the tree structure
-3. No distinction between `Node` and `EmptyNode`
+No need for manipulating the data
+=> No distinction between `Node` and `EmptyNode`
+=> Use `Hash` to represent the tree structure
 
 ```ruby
-def merge(left, right, element)
-  {
-    left: left,
-    right: right,
-    element: element
+def merge
+  -> (left, right, element) {
+    {
+      left: left,
+      right: right,
+      element: element
+    }
   }
 end
 
 t1 = { left: nil, right: nil, element: 1 }
 t2 = { left: nil, right: nil, element: 2 }
-
-t = merge(t1, t2, 3)
+t = merge.(t1, t2, 3)
 # { :left    => { :left=>nil, :right=>nil, :element=>1 },
 #   :right   => { :left=>nil, :right=>nil, :element=>2 },
 #   :element => 3 }
@@ -286,43 +238,58 @@ def combine
     }
   }
 end
+```
 
+---
+```ruby
 # Usage
 
-reducer = combine.(foo:
-  combine.(ad: ab)
-)
+ab = -> (state, action) {
+  case action[:type]
+  when "a_plus_one"
+    { a: state[:a]+1, b: state[:b] }
+  when "b_plus_one"
+    { a: state[:a], b: state[:b]+1 }
+  else
+    state
+  end
+}
+
+reducer = combine.(
+            foo: combine.(
+              ad: ab
+            )
+          )
 s = { foo: { ab: { a: 0, b: 0 } } }
 a = { type: 'a_plus_one' }
-
-reducer.(s, a)
-# => {:foo=>{:ab=>{:a=>1, :b=>0}}}
+reducer.(s, a) # => {:foo=>{:ab=>{:a=>1, :b=>0}}}
 ```
+
 ---
 <div style="text-align:center">
   <h3>Step 2-2: Observable Object Tree</h3>
   <br />
   <img src="step_2_2.png" style="width: 900px;" />
   <br />
-  <h3>1. Wrap the reducer tree in <span style="color: red">Store</span> to maintain the state</h3>
-  <h3>2. Expose a function <span style="color: red">Dispatch</span> to update the state</h3>
 </div>
+  <h5>1. Wrap the reducer tree in <span style="color: red">Store</span> to maintain the state</h5>
+  <h5>2. Expose a function <span style="color: red">Dispatch</span> to update the state</h5>
+  <h5>3. Expose a function <span style="color: red">Subscribe</span> to define callback of state update</h5>
 
 ---
 <div style="text-align:center">
   <h3>Step 3: Flexible Event Handling Mechanism</h3>
   <br />
   <img src="step_3.png" style="width: 900px;" />
-  <h3>Construct middlewares by <span style="color: red">Function Composition</span></h3>
+  <h3>Construct middlewares by <span style="color: red">Composition</span></h3>
 </div>
 
 ---
-# Function Composition
+# Composition
 
-- `f(g(x))`
+- `h(x) = f(g(x))`
 - Apply one function to the result of another function to produce a third function
 - Control complexity by breaking larger function into smaller functions
-- **Middleware** is built on function composition
 
 ---
 # Example 1
@@ -330,42 +297,49 @@ reducer.(s, a)
 add_one  = -> n { n + 1 }
 time_two = -> n { n * 2 }
 
-[1, 2, 3].map { |n| time_two.(add_one.(n)) }
+composed = -> n { time_two.(add_one.(n)) }
+
+[1, 2, 3].map(&composed)
 # => [4, 6, 8]
 ```
-Question: Any more concise way to do this?
+What if we have more than two functions to compose?
 
 ---
 # Example 2
 ```ruby
 add_one  = -> n { n + 1 }
 time_two = -> n { n * 2 }
+add_four = -> n { n + 4 }
 
-compose = -> f { -> g { -> n { g.(f.(n)) } } }
+compose  = -> f { -> g { -> n { g.(f.(n)) } } }
 
-func = compose.(add_one).(time_two)
+init     = -> n { n }
+composed = init
+[add_one, time_two, add_four].each do |f|
+  composed = compose.(composed).(f)
+end
 
-[1, 2, 3].map(&func)
-# => [4, 6, 8]
+[1, 2, 3].map(&composed)
+# => [8, 10, 12]
 ```
-Looks good, but what if we have more than two functions to compose?
+The value of `composed` is mutated. Is there any more concise way?
 
 ---
 # Example 3
 ```ruby
 add_one  = -> f { -> n { f.(n+1) } }
 time_two = -> f { -> n { f.(n*2) } }
+add_four = -> f { -> n { f.(n+4) } }
 
 compose  = -> funcs {
   init = -> n { n }
-  funcs.reverse.reduce(init) { |acc, curr| curr.(acc) }
+  funcs.reverse.reduce(init) {|result, f| f.(result)}
 }
 
-func = compose.([add_one, time_two])
+composed = compose.([add_one, time_two, add_four])
 
-[1, 2, 3].map(&func) # => [4, 6, 8]
+[1, 2, 3].map(&composed) # => [8, 10, 12]
 ```
-We can compose arbitrary numbers of functions as long as they have the same structure.
 
 ---
 # Implementation
@@ -386,6 +360,7 @@ end
 
 # add_one  = -> f { -> n { f.(n+1) } }
 # time_two = -> f { -> n { f.(n*2) } }
+# add_four = -> f { -> n { f.(n+4) } }
 ```
 
 ---
@@ -409,7 +384,7 @@ end
 
 # compose  = -> funcs {
 #   init = -> n { n }
-#   funcs.reverse.reduce(init) { |acc, curr| curr.(acc) }
+#   funcs.reverse.reduce(init) { |result, f| f.(result) }
 # }
 ```
 
@@ -455,12 +430,17 @@ m2 = create.(
   }
 )
 
-apply.(m1, m2).(STATE, DISPATCH).(ACTION)
+new_dispatch = apply.(m1, m2).(STATE, DISPATCH)
+new_dispatch.(ACTION)
 # => "In middleware 1"
 # => "In middleware 2"
+# update state
 # => "Out middleware 2"
 # => "Out middleware 1"
 ```
+
+---
+# How to use it?
 
 ---
 # Summary
@@ -469,17 +449,15 @@ apply.(m1, m2).(STATE, DISPATCH).(ACTION)
 Some concepts in Functional Programming such as:
 
 - Lambda
-- Recursive Data Type
-- Function Composition
+- Recursive data type
+- Composition
 
 ### What I havn't covered
 
 - Immutable
-- Lazy Evaluation
+- Lazy evaluation
 - Monad
 - ...
-
-### See [Rubidux](https://github.com/davidjuin0519/rubidux) for more details
 
 ---
 # Thanks for your listening!
