@@ -1,8 +1,9 @@
 <div style="text-align:center">
-  <img src="ruby_logo.png" style="margin-right:40px" />
-  <img src="plus.png" style="position: relative; top:-50px" />
-  <img src="lambda_logo.png" style="position: relative; top:15px;" />
+  <img src="ruby_logo.png" style="width: 150px; margin-right:40px" />
+  <img src="plus.png" style="position: relative; top:-40px" />
+  <img src="redux_logo.png" style="width: 150px; margin-left: 40px;" />
   <h3>Exploring Functional Programming by Rebuilding Redux</h3>
+  <h6>Ruby + Redux = Rubidux</h6>
 </div>
 <br/>
 <div style="text-align:right">

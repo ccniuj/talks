@@ -55,9 +55,10 @@ R_GH = -> (state, action) {
 }
 
 # Combine
-foo = Rubidux::Reducer.combine.(ab: R_AB, cd: R_CD)
-bar = Rubidux::Reducer.combine.(ef: R_EF, gh: R_GH)
-r = Rubidux::Reducer.combine.(foo: foo, bar: bar)
+r = Rubidux::Reducer.combine.(
+      foo: Rubidux::Reducer.combine.(ab: R_AB, cd: R_CD),
+      bar: Rubidux::Reducer.combine.(ef: R_EF, gh: R_GH)
+    )
 
 # Middlewares
 m1 = Rubidux::Middleware.create.(
