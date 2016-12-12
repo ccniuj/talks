@@ -181,7 +181,7 @@ module Reducer
       @func_map = func_map
     end
     def apply(state, action)
-      func_map.map { |k, v| [k, v.apply(state[k], action)] }
+      func_map.map {|k, v|[k, v.apply(state[k], action)]}
               .to_h
     end
   end
