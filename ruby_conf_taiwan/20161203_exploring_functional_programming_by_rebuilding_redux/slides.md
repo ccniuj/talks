@@ -8,7 +8,6 @@
 <br/>
 <div style="text-align:right">
   <h6>Juin Chiu <a href="https://github.com/davidjuin0519">@davidjuin0519</a></h6>
-  <h6>Backend Engineer, iCook, Polydice. Inc</h6>
 </div>
 
 ---
