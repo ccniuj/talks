@@ -66,7 +66,7 @@
 ## [Simblock](https://github.com/juinc/simblock)
 - Simple Blockchain Implementation
 - Current status: only the core part is developed
-- Need more comtributors
+- Need more contributors
 
 ---
 
