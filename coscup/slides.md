@@ -8,7 +8,7 @@
 - [Reddit](https://www.reddit.com/r/ethereum/comments/61y5ix/welcome_to_rethereum_the_reddit_front_page_of_the/)
 
 ### Taipei Ethereum Meetup
-- [Slack](http://bit.ly足/252hNY0) (password: decentralized)
+- [Slack](http://bit.lyè¶³/252hNY0) (password: decentralized)
 - [Meetup](https://www.meetup.com/Taipei-Ethereum-Meetup/)
 - [Wiki](https://github.com/EtherTW/Taipei-Ethereum-Wiki/wiki)
 
@@ -31,7 +31,7 @@
 
 ---
 
-### p2p network
+### P2P network
 - Blocks are broadcasted to the network
 - Blocks are collected and verified by each p2p node
 - Blocks are appended to the **Chain**, thus the name **Blockchain**
