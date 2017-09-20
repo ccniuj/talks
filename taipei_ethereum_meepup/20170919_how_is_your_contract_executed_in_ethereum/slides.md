@@ -2,6 +2,8 @@
 
 [@juinc](https://github.com/juinc)
 
+[Video Link](https://www.youtube.com/watch?v=MUoj_tQWK1c&feature=youtu.be)
+
 ---
 # Outline
 
