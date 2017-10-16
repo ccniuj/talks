@@ -11,6 +11,12 @@
 - **Appendix J: ETHASH**
 
 ---
+# Review
+### Please refer to my previous talk:
+- [Let's Make a Blockchain (Basic)](https://github.com/juinc/talks/blob/master/coscup/slides.md)
+- [How is Your Contract Executed in Ethereum? (EVM)](https://github.com/juinc/talks/blob/master/taipei_ethereum_meepup/20170919_how_is_your_contract_executed_in_ethereum/slides.md)
+
+---
 # Overview
 
 - **Consensus**: general agreement on the **World State**
@@ -18,7 +24,7 @@
   - **Proof of Work**
   - Proof of Stake
   - ...
-- The process of reaching the consensus is called **finalization**
+- The process of applying or wrapping a block is called **finalization**
 
 ---
 # Section 10: Blocktree to Blockchain
@@ -30,6 +36,7 @@
 ---
 # Section 11: Block Finalization
 
+- Peer (Non-miner) v.s. Miner
 - Step 1: Validate (Determine) **Ommers**
 - Step 2: Validate (Determine) **Transactions**
 - Step 3: Apply **Rewards**
@@ -80,6 +87,8 @@
 ## A. Validate (Cont.)
 ### and
 ![](2_7.png)
+### and
+![](2_14.png)
 
 ---
 # Step 4: Validate (Determine) **State** and **Nonce**
