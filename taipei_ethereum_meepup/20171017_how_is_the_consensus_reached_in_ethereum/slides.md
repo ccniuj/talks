@@ -31,12 +31,11 @@
 - The canonical blockchain is a path from root to leaf through the entire block tree
 - Define **Total Difficulty**:
 ![](1_1.png)
-- Choose the path that has had the most computation done upon it, or, **the most difficult path**
+- Choose the path that has the most computation done upon it, or, **the most difficult path**
 
 ---
 # Section 11: Block Finalization
-
-- Peer (Non-miner) v.s. Miner
+### Peer (Non-miner) v.s. Miner
 - Step 1: Validate (Determine) **Ommers**
 - Step 2: Validate (Determine) **Transactions**
 - Step 3: Apply **Rewards**
