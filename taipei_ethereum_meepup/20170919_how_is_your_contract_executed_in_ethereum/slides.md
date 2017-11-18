@@ -18,16 +18,16 @@
 # Overview
 
 - What is Blockchain?
-**=> Destributed State Machine**
-[(See More in My Previous Talk)](https://github.com/juinc/talks/blob/master/coscup/slides.md)
+  - **Destributed State Machine**
+[(See more in my previous talk)](https://github.com/juinc/talks/blob/master/coscup/slides.md)
 
-- What is the Difference between **Bitcoin** and **Ethereum**?
-**=> 1. State Modeling (UTXO v.s. World State)**
-**=> 2. Rewarding Mechanism(Uncle Blocks are Introduced)**
-**=> 3. Programmability (Smart Contract)**
+- What is the difference between **Bitcoin** and **Ethereum**?
+  - **State Modeling (UTXO v.s. World State)**
+  - **Rewarding Mechanism(uncle blocks are introduced)**
+  - **Programmability (smart contract)**
 
 - What is **Ethereum Virtual Machine (EVM)**?
-**=> A Machine that Performs Instructions from Compiled Bytecode (Smart Contract) which is Stored in World State**
+  - **A machine that performs instructions from compiled bytecode (smart contract) which is stored in world state**
 
 ---
 # EVM Overview
@@ -35,23 +35,20 @@
 - **Stack-based Machine**
 - **Memory Model: Word-addressed Byte Array, Volatile**
 - **Storage Model: Word-addressed Word Array, Non-volatile**
-- **Quasi-Turing-Complete Machine, Will Raise Out-Of-Gas(OOS) Exception if the Paid Gas is Insufficient**
+- **Quasi-Turing-Complete Machine, will raise out-of-gas(oos) exception if the paid gas is insufficient**
 
 ---
 # Section 6: Transaction Execution
 ## Overview
 ![](6_1.png)
+
 There are totally 5 phases of state during transaction execution:
-**Initial State =(1)=>**
-**Checkpoint State =(2)=>**
-**Post-execution Provisional State =(3)=>**
-**Pre-final State =(4)=>**
-**Final State**
-where
-(1) substrate gas limit x gas price and increment nonce
-(2) process message call or contract creation (will be explained later)
-(3) apply refunds and rewards
-(4) delete destructed accounts
+
+- **Initial State => (Substrate gas limit x gas price and increment nonce)**
+- **Checkpoint State => (Process message call or contract creation)**
+- **Post-execution Provisional State => (Apply refunds and rewards)**
+- **Pre-final State => (Delete destructed accounts)**
+- **Final State**
 
 ---
 # Section 6: Transaction Execution
@@ -79,7 +76,7 @@ where
 ### Where
 ![](6_3_1.png)
 
-***These Functions Will be Explained More in Section 7 & 8**
+***These functions will be explained more in section 7 & 8**
 
 ---
 # Section 6: Transaction Execution
@@ -120,7 +117,7 @@ where
 ## (2) Initialize
 ![](7_2.png)
 
-***The Function Will be Expalined More in Section 9**
+***The function will be expalined more in section 9**
 
 ---
 # Section 7: Contract Creation
@@ -190,6 +187,6 @@ where
 ---
 # Conclusion
 
-- **Formulas are Concise and Elegant**
-- **Focused on the Whole Picture thus Many Details are Skipped**
-- **Focused the EVM thus the Consensus Strategy are Skipped**
+- **Formulas are concise and elegant**
+- **Focused on the whole picture thus many details are skipped**
+- **Focused the EVM thus the consensus strategy are skipped**
