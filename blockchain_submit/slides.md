@@ -25,11 +25,10 @@
 ---
 # Who are We? (2)
 ## [BeyondBlockTaipei 2017](https://ethertw.github.io/bbt2017/)
-![](bbt2017.png)
-- **Vitalik is HERE!**
-- Focusing on technology
-- 8 speakers / 6 sponsors / 150+ audience
-- [Live streaming available](https://www.youtube.com/watch?v=md9iNDdAmVo&feature=youtu.be)
+
+**Vitalik is HERE!**
+
+![](bbt2017_1.png)
 
 ---
 # What is Ethereum (1)?
