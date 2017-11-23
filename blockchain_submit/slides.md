@@ -8,7 +8,7 @@
 - Who are We?
 - What is Ethereum?
 - How does Smart Contract Work?
-- Applications of Smart Contracts
+- Application of Smart Contract: EtherDelta
 
 ---
 # Who are We? (1)
@@ -43,23 +43,45 @@
 - Turing Complete Programmability (smart contract)
 
 ---
-# How does Smart Contract Work (1)?
+# How Does Smart Contract Work (1)?
 ![](smart_contract1.png)
 
 ---
-# How does Smart Contract Work (2)?
+# How Does Smart Contract Work (2)?
 ## Ethereum Virtual Machine
 - A machine that performs instructions from compiled bytecode (smart contract) which is stored in world state
 - Quasi-Turing-Complete Machine, will raise out-of-gas(oos) exception if the paid gas is insufficient
 
 ---
-# Applications of Smart Contracts
-## Etherdelta
-[reference: 去中心化交易所 — etherdelta](https://medium.com/taipei-ethereum-meetup/dapp-%E6%87%89%E7%94%A8-%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E4%BA%A4%E6%98%93%E6%89%80-etherdelta-8644928a34d7)
+## Application of Smart Contract: EtherDelta (1)
+### 2 types of contracts
+- ERC20 Token Contract
+- Exchange Contract
+
+[reference: 去中心化交易所 — EtherDelta](https://medium.com/taipei-ethereum-meetup/dapp-%E6%87%89%E7%94%A8-%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E4%BA%A4%E6%98%93%E6%89%80-etherdelta-8644928a34d7)
+
+---
+## Application of Smart Contract: EtherDelta (2)
+### ERC20 Token
+- ERC: Ethereum Request for Comments
+- Spec of interface that token contract has to implement
+- Interface including:
+  - totalSupply
+  - balanceOf
+  - trasfer
+  - transferFrom
+  - approve
+  - allowance
+
+---
+## Application of Smart Contract: EtherDelta (3)
+### Exahange Contract
+![](exchange1.png)
 
 ---
 # Conclusion
-
+### 1. Smart contract makes ethereum powerful
+### 2. Join us!
 - For developers
 **Join our meetups and give us a talk**
 
