@@ -7,7 +7,7 @@
 # Outline
 - Who are We?
 - What is Ethereum?
-- How does Smart Contract Work?
+- How Does Smart Contract Work?
 - Application of Smart Contract: EtherDelta
 
 ---
@@ -76,7 +76,7 @@
 ---
 ## Application of Smart Contract: EtherDelta (3)
 ### Exahange Contract
-![](exchange1.png)
+![](exchange2.png)
 
 ---
 # Conclusion
